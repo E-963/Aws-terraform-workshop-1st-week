@@ -2,7 +2,7 @@
 resource "aws_s3_bucket" "s3-1" {
   bucket = "main-s3-1"
 
-  force_destroy       = true    # force destroy even if the bucket not empty
+  force_destroy       = true # force destroy even if the bucket not empty
   object_lock_enabled = false
 
   tags = {
@@ -42,4 +42,11 @@ resource "aws_s3_bucket_policy" "s3-1-policy" {
    ]
 }
   EOF
+}
+
+# Create S3 objects (i.e directories)
+resource "aws_s3_object" "directory_object_s3_1_sama" {
+  bucket       = aws_s3_bucket.s3-1.id
+  key          = "sama/"
+  content_type = "application/x-directoy"
 }
