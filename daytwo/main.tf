@@ -32,24 +32,18 @@ resource "aws_s3_object" "directory" {
 }
 
 # Get IAM user
-data "aws_iam_user" "iam_user" {
-  user_name = var.iam_user
+resource "aws_iam_user" "user" {
+  name = "test-user" 
 }
 
 # Create policy document for the IAM user to allow upload only under logs/
-data "aws_iam_policy_document" "allow_access_iam_user" {
+data "aws_iam_policy_document" "upload_object_user" {
   statement {
     actions = ["s3:PutObject"]
     resources = ["${aws_s3_bucket.s3-1.arn}/logs/*"]
     principals {
       type        = "AWS"
-      identifiers = [data.aws_iam_user.iam_user.arn]
+      identifiers = ["data.aws_iam_user.user.arn"]
     }
   }
-}
-
-# Attach the policy to the bucket
-resource "aws_s3_bucket_policy" "S3-1-policy" {
-  bucket = aws_s3_bucket.s3-1.id
-  policy = data.aws_iam_policy_document.allow_access_iam_user.json
 }
