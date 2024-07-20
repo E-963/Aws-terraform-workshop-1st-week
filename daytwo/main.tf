@@ -18,14 +18,20 @@ resource "aws_s3_bucket" "s3-1" {
 }
 
 # Enable ACL as private
-resource "aws_s3_bucket_acl" "acl-s3-1" {
-  depends_on = [aws_s3_bucket_ownership_controls.ownership_s3-1]
+resource "aws_s3_bucket_ownership_controls" "controls-1" {
+  bucket = aws_s3_bucket.s3-1.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "acl-1" {
+  depends_on = [aws_s3_bucket_ownership_controls.controls-1]
 
   bucket = aws_s3_bucket.s3-1.id
   acl    = "private"
-
-
 }
+
 # Enable S3 Bucket Versioning
 resource "aws_s3_bucket_versioning" "version-1" {
   bucket = aws_s3_bucket.s3-1.id
