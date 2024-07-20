@@ -10,5 +10,5 @@ terraform {
 # Configure the AWS Provider
 provider "aws" {
   region  = "us-east-1"
-  profile = "defult" # force destroy even if the bucket not empty
+  profile = "default" # force destroy even if the bucket not empty
 }
