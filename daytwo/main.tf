@@ -1,8 +1,3 @@
-variable "iam_user" {
-  default = "Sama"
-}
-
-
 # Create S3 Bucket
 resource "aws_s3_bucket" "s3-1" {
   bucket = "main-s3-1"
@@ -16,18 +11,8 @@ resource "aws_s3_bucket" "s3-1" {
     Owner       = "Sama"
   }
 }
-
-# Enable ACL as private
-resource "aws_s3_bucket_ownership_controls" "controls-1" {
-  bucket = aws_s3_bucket.s3-1.id
-  rule {
-    object_ownership = "BucketOwnerPreferred"
-  }
-}
-
+# create ACL
 resource "aws_s3_bucket_acl" "acl-1" {
-  depends_on = [aws_s3_bucket_ownership_controls.controls-1]
-
   bucket = aws_s3_bucket.s3-1.id
   acl    = "private"
 }
@@ -37,15 +22,6 @@ resource "aws_s3_bucket_versioning" "version-1" {
   bucket = aws_s3_bucket.s3-1.id
   versioning_configuration {
     status = "Enabled"
-  }
-}
-
-# Create a directory in the S3 bucket
-resource "aws_s3_directory_bucket" "example" {
-  bucket = "main-s3-1--use1-az4--x-s3"
-
-  location {
-    name = "use1-az4"
   }
 }
 
