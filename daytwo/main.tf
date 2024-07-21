@@ -46,6 +46,6 @@ data "aws_iam_policy_document" "upload_object_user" {
 # Create S3 Object (i.e directories)
 resource "aws_s3_object" "directory_object_s3-1_public" {
   bucket = aws_s3_bucket.s3-1.id
-  key = "Public/"
+  key = "logs/"
   content_type = "application/x-directory"
 }
