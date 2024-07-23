@@ -10,5 +10,13 @@ terraform {
 # Configure the AWS Provider
 provider "aws" {
   region  = "us-east-1"
-  profile = "default" # force destroy even if the bucket not empty
+  profile = "default" 
+}
+
+terraform {
+  backend "s3" {
+    bucket         = "erakiterrafromstatefiles" 
+    key            = "terraform.tfstate"
+    region         = "us-east-1"
+}
 }
