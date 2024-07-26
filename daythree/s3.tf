@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "buc-1" {
   object_lock_enabled = false
 
   tags = {
-    Name        = "erakiterrafromstatefiles"
+    Name        = "bucket"
     Environment = "terraformChamps"
     Owner       = "Sama"
   }
